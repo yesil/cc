@@ -25,10 +25,16 @@ const swcImportMaps = Object.fromEntries([
   'button-group.js',
   'alert-dialog.js',
   'underlay.js',
+  'picker.js',
+  'menu.js',
+  'popover.js',
+  'overlay.js',
+  'menu-item.js',
   'help-text.js',
   'icon.js',
   'icons/checkmark.js',
   'icons/dash.js',
+  'icons/chevron.js',
 ].map((file) => [`/libs/features/spectrum-web-components/dist/${file}`, `/node_modules/@adobecom/milo/libs/features/spectrum-web-components/dist/${file}`]));
 
 export default {

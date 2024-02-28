@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+
+<body>
+  <header></header>
+  <main>
+    <div id="swcDemo"></div>
+    <script type="module">
+      import { runTests } from '@web/test-runner-mocha';
+      import { expect } from '@esm-bundle/chai';
+      import { setLibs } from '../../../creativecloud/scripts/utils.js';
+
+      runTests(async () => {
+        const libs = setLibs('/node_modules/@adobecom/milo/libs', true);
+        const { setConfig } = await import(`${libs}/utils/utils.js`);
+        setConfig({ codeRoot: libs });
+
+        describe('SWC Demo', () => {
+          it('should render the SWC demo app', async () => {
+            const { default: init } = await import(`${libs}/blocks/swc-demo/swc-demo.js`);
+            const el = await init(document.getElementById('swcDemo'));
+            expect(el.tagName).to.equal('SWC-DEMO');
+          });
+        });
+
+      });
+
+    </script>
+</body>
+
+</html>

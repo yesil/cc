@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+
+<body>
+  <header></header>
+  <main>
+    <div id="swcDemoWrapper"></div>
+    <script type="module">
+      import { runTests } from '@web/test-runner-mocha';
+      import { expect } from '@esm-bundle/chai';
+      import { setLibs } from '../../../creativecloud/scripts/utils.js';
+
+      const makePause = async () => new Promise((resolve) => setTimeout(resolve, 100));
+
+      runTests(async () => {
+        const libs = setLibs('/node_modules/@adobecom/milo/libs', true);
+        const { setConfig } = await import(`${libs}/utils/utils.js`);
+        setConfig({ codeRoot: libs });
+
+        describe('SWC Demo wrapper', () => {
+          it('should render the SWC demo wrapper app', async () => {
+            const { default: init } = await import('../../../creativecloud/blocks/swc-demo-wrapper/swc-demo-wrapper.js');
+            const el = await init(document.getElementById('swcDemoWrapper'));
+            expect(el.tagName).to.equal('SP-THEME');
+            const btn = el.querySelector('sp-button');
+            btn.click();
+            await makePause();
+            btn.click();
+            await makePause();
+            const swcDemos = el.querySelectorAll('swc-demo');
+            expect(swcDemos.length).to.equal(2);
+          });
+        });
+
+      });
+
+    </script>
+</body>
+
+</html>
